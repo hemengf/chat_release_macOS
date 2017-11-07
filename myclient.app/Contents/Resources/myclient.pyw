@@ -18,10 +18,10 @@ root.resizable(width=FALSE, height=FALSE)
 #root.tk.call('wm','iconphoto',root._w,img)
 
 #Chat window $ Entry box
-ChatLog = Text(root, bd=0, bg="white", height="8", width="50", font=("Inconsolata",16))
+ChatLog = Text(root, bd=0, bg="white", height="8", width="50", font=("Inconsolata",16),wrap=WORD)
 ChatLog.insert(END, "Connecting to your partner..\n")
 ChatLog.config(state=DISABLED)
-EntryBox = Text(root, bd=0, bg="white",width="29", height="5", font=("Inconsolata",16))
+EntryBox = Text(root, bd=0, bg="white",width="29", height="5", font=("Inconsolata",16),wrap=WORD)
 ChatLog.place(x=0,y=6, height=h/1.5, width=w)
 EntryBox.place(x=0, y=h/1.5, height=h-h/1.5, width=w)
 def quitfunction():
@@ -43,6 +43,18 @@ def ConnectSocket(s,logfile):
             s.sendall(EntryText.encode('utf8'))
             if EntryText == 'exit()\n':
                 quitfunction()
+            if EntryText == 'who is the fairest one of all?\n':
+                pic = open('newerascii','r')
+                art = pic.read()
+                ChatLog.config(state=NORMAL)
+                ChatLog.config(font=('Inconsolata',2))
+                ChatLog.insert(END,art)
+                root.update()
+                root.after(1000)
+                ChatLog.delete('end-%dc'%(len(art)+1),'end')
+                ChatLog.insert(END,'\n')
+                ChatLog.config(font=('Inconsolata',16))
+                root.update()
             if EntryText == 'poem()\n':
                fpoem = open('POEM','r') 
                POEM = fpoem.read() 
